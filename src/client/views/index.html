@@ -66,6 +66,26 @@
             </div>
         </div>
 
+        <div class="modal">
+            <div class="modal__content">
+                <div class="modal__close">
+                    &times;
+                </div>
+                <div class="modal__title">
+                    Add a new trip
+                </div>
+                <div class="modal__form">
+                    <label for="destination">Enter a destination</label>
+                    <input id="destination" type="text" name="input" value=""  placeholder="Destination">
+                    <label for="departure">Enter a departure date (DD/MM/YYYY)</label>
+                    <input id="departure" type="text" name="input" value=""  placeholder="Departure">
+                    <label for="arrival">Enter an arrival date (DD/MM/YYYY)</label>
+                    <input id="arrival" type="text" name="input" value=""  placeholder="Arrival">
+                    <button class="modal__add_button">Add Trip</button>
+                </div>
+            </div>
+        </div>
+
 
         <form class="" onsubmit="return Client.handleSubmit(event)">
             <label for="url">Enter a url</label>
