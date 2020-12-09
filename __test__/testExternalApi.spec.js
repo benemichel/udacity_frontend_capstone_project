@@ -1,4 +1,4 @@
-import { fetchGeonamesApi, fetchWeatherbitApi, fetchWeatherbitApiCurrent, fetchWeatherbitApiForecast } from "../src/server/externalApi"
+import { fetchGeonamesApi, fetchWeatherbitApi, fetchWeatherbitApiCurrent, fetchWeatherbitApiForecast, fetchPixabayApi } from "../src/server/externalApi"
 require('dotenv').config()
 
 describe("Testing Geonames API fetching", () => {
@@ -56,6 +56,16 @@ describe("Testing Weatherbit API fetching", () => {
         console.log(res);
         expect(res.placename).toBe(expected.placename);
         expect(res.days).toBeInstanceOf(Array);
+    })
+});
+
+describe("Testing Pixabay API fetching", () => {
+    test("Test Pixabay Image api with valid query parameters", async () => {
+        const placename = 'Limburg an der Lahn'
+
+        const res = await fetchPixabayApi(placename);
+        console.log(res);
+        expect(res.length).toBeGreaterThan(0);
     })
 });
 

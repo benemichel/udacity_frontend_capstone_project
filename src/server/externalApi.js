@@ -88,5 +88,26 @@ const fetchWeatherbitApiForecast = async (lat, long) => {
     }
 }
 
+const fetchPixabayApi = async (placename) => {
+    const fullUrl =  'https://pixabay.com/api/?key=' + process.env.PIXABAY_API_KEY
+        + '&q=' + encodeURIComponent(placename);
 
-export {fetchGeonamesApi, fetchWeatherbitApi, fetchWeatherbitApiCurrent, fetchWeatherbitApiForecast}
+    console.log(`api call to ${fullUrl}`)
+    try {
+        const res = await fetch(fullUrl);
+        const json = await res.json();
+        console.log(json);
+        if (json.total > 1) {
+            return json.hits[0].webformatURL;
+        }
+        else {
+            return 'no image found';
+        }
+    } catch(err) {
+        console.log('pixabay forecast api fetch error', err);
+        return err;
+    }
+}
+
+
+export {fetchGeonamesApi, fetchWeatherbitApi, fetchWeatherbitApiCurrent, fetchWeatherbitApiForecast, fetchPixabayApi}
