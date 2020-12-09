@@ -37,7 +37,7 @@ app.get('/', function (req, res) {
 })
 
 
-console.log(`Your API key is ${process.env.API_KEY}`);
+//console.log(`Your API key is ${process.env.API_KEY}`);
 
 
 // app.post('/sentiment', (req, res) => {
