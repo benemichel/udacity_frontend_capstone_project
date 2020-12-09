@@ -16,26 +16,72 @@
 <main>
     <section class="add_trip">
         <p class="add_trip__text">My Trips:</p>
-        <button class="add_trip_button">Add Trip</button>
+        <div class="add_trip__button">
+            <img class="add_trip__icon" src="/src/client/media/plus-thick.png" alt="add trip"/>
+            Add Trip
+        </div>
     </section>
     <section class="next_trip">
         <div class="next_trip_card">
-            <img class="trip__image" src="" alt="" />
-            <h3 class="trip__title"></h3>
-            <div class="trip__action">
-                <button class="save_trip">Save Trip</button>
-                <button class="remove_trip">Remove Trip</button>
-            </div>
-            <div class="trip__content">
-                <div class="trip_wx">
-                    <div class="trip_wx__header"></div>
-                    <div class="trip_wx__header"></div>
-
+            <img class="trip__image" src="/src/client/media/placeholder.jpg" alt="" />
+            <div class="trip__info">
+                <h3 class="trip__title">
+                    <span>My trip to</span>
+                    <span class="destination_name">#Paris</span>
+                </h3>
+                <h3>
+                    <span>Departing</span>
+                    <span>#02/12/2020</span>
+                </h3>
+                <div class="trip__action">
+                    <button class="save_trip">Save Trip</button>
+                    <button class="remove_trip">Remove Trip</button>
                 </div>
-                <div class="trip_time">
-                    <div class="trip_time__till"></div>
-                    <div class="trip_time__duration"></div>
+                <div class="trip__content">
+                    <div class="trip_time">
+                        <div class="trip_time__till">
+                        </div>
+                        <div class="trip_time__duration">
 
+                        </div>
+
+                    </div>
+
+                    <div class="trip_wx">
+                        <div class="trip_wx__header">
+                            Typical Weather for then is:
+                        </div>
+                        <div class="trip_wx__temp">
+
+                        </div>
+                        <div class="trip_wx__icon">
+
+                        </div>
+                        <div class="trip_wx__description">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal">
+            <div class="modal__content">
+                <div class="modal__close">
+                    &times;
+                </div>
+                <div class="modal__title">
+                    Add a new trip
+                </div>
+                <div class="modal__form">
+                    <label for="destination">Enter a destination</label>
+                    <input id="destination" type="text" name="input" value=""  placeholder="Destination">
+                    <label for="departure">Enter a departure date (DD/MM/YYYY)</label>
+                    <input id="departure" type="text" name="input" value=""  placeholder="Departure">
+                    <label for="arrival">Enter an arrival date (DD/MM/YYYY)</label>
+                    <input id="arrival" type="text" name="input" value=""  placeholder="Arrival">
+                    <button class="modal__add_button">Add Trip</button>
                 </div>
             </div>
         </div>

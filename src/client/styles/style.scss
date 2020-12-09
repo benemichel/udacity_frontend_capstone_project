@@ -4,3 +4,33 @@ body {
   min-height: 100vh;
   margin: 0;
 }
+
+
+.add_trip {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+
+  .add_trip__text {
+    font-weight: bold;
+  }
+
+  .add_trip__button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: solid;
+    border-radius: 20px;
+    border-color: lightgrey;
+    max-height: 25px;
+    box-shadow: none;
+    cursor: pointer;
+    text-transform: lowercase;
+    padding: 0 5px;
+    font-weight: bold;
+  }
+
+  .add_trip__icon {
+    max-height: 23px;
+  }
+}
