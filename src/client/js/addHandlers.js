@@ -9,6 +9,9 @@ const closeModal = (event) => {
 }
 const showModal = (event) => {
     const modal = document.getElementsByClassName('modal').item(0);
+    document.getElementById('departure').value = new Date().toLocaleDateString('en-GB');
+    document.getElementById('arrival').value = new Date().toLocaleDateString('en-GB');
+
     modal.style.display = 'block';
 }
 

@@ -17,9 +17,10 @@ const postTripData = async (destination, departure, arrival) => {
     );
     try {
         const resData = await res.json();
+        console.log('post data returned ', resData);
         return resData;
     } catch (err) {
-        console.log('error', error);
+        console.log('error', err);
     }
 }
 

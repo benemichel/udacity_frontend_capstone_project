@@ -1,25 +1,18 @@
-import moment from 'moment';
-const fetch = require("node-fetch");
+const moment = require('moment');
+const fetch = require('node-fetch');
 
-const fetchDestinationWx = async (placename, date) => {
-    let destData = {};
-    fetchGeonamesApi(placename).then( res => {
-        fetchWeatherbitApi(res.lat, res.long, date).then( res => {
-            destData.wx = res;
-        }).catch( err => {
-            console.log('error', err);
-        });
-        fetchPixabayApi(placename).then( res => {
-            destData.imageUrl = res;
-        }).catch( err => {
-            console.log('error', err);
-        });
+const fetchDestinationData = async (placename, date) => {
+    const coords = await fetchGeonamesApi(placename);
+    // console.log('coords', coords);
+    const wx = await fetchWeatherbitApi(coords.lat, coords.long, date);
+    // console.log('wx', wx);
+    const imageUrl = await fetchPixabayApi(placename);
+    // console.log('imageUrl', imageUrl);
 
-        return destData;
-    }).catch( err => {
-        console.log('error', err);
-        return 'could not fetch destination dest data'
-    })
+    return {
+        wx: wx,
+        imageUrl: imageUrl,
+    }
 }
 
 const fetchGeonamesApi = async (placename) => {
@@ -32,7 +25,15 @@ const fetchGeonamesApi = async (placename) => {
         const res = await fetch(fullUrl);
         const json = await res.json();
         const firstPostalCode = json.postalcodes.slice(0)[0];
-        console.log(firstPostalCode);
+        // console.log(firstPostalCode);
+
+        // console.log({
+        //     lat: firstPostalCode.lat,
+        //     long: firstPostalCode.lng,
+        //     country: firstPostalCode.countryCode,
+        //     placename: firstPostalCode.adminName1,
+        //
+        // });
 
         return {
             lat: firstPostalCode.lat,
@@ -41,7 +42,7 @@ const fetchGeonamesApi = async (placename) => {
             placename: firstPostalCode.adminName1,
 
         }
-    } catch(err) {
+    } catch (err) {
         console.log('geonames api fetch error', err);
         return err;
     }
@@ -49,23 +50,28 @@ const fetchGeonamesApi = async (placename) => {
 
 const fetchWeatherbitApi = async (lat, long, date) => {
     //if trip more than a week in future fetch forecast, otherwise current weather
-    const userDate = moment(date,'DD/MM/YYYY');
+    const userDate = moment(date, 'DD/MM/YYYY');
     const today = moment();
     const diffDays = userDate.diff(today, 'days');
 
     if (diffDays > 7) {
-        fetchWeatherbitApiForecast(lat, long).then( res => {
-            return res;
-        }).catch( err => {
+        try {
+            const wx = await fetchWeatherbitApiForecast(lat, long);
+            return wx;
+        }
+        catch (err) {
+            console.log('error', err);
             return err;
-        })
-    }
-    else {
-        fetchWeatherbitApiCurrent(lat, long).then( res => {
-            return res;
-        }).catch( err => {
+        }
+    } else {
+        try {
+            const wx = await fetchWeatherbitApiCurrent(lat, long);
+            return wx;
+        }
+        catch (err) {
+            console.log('error', err);
             return err;
-        })
+        }
     }
 }
 
@@ -77,7 +83,6 @@ const fetchWeatherbitApiCurrent = async (lat, long) => {
     try {
         const res = await fetch(fullUrl);
         const json = await res.json();
-        console.log(json);
         const data = json.data[0];
 
         return {
@@ -92,7 +97,7 @@ const fetchWeatherbitApiCurrent = async (lat, long) => {
                 }
             ]
         }
-    } catch(err) {
+    } catch (err) {
         console.log('weatherbit api current fetch error', err);
         return err;
     }
@@ -106,7 +111,7 @@ const fetchWeatherbitApiForecast = async (lat, long) => {
     try {
         const res = await fetch(fullUrl);
         const json = await res.json();
-        console.log(json);
+        // console.log(json);
         const data = json.data;
 
         const days = [];
@@ -120,37 +125,37 @@ const fetchWeatherbitApiForecast = async (lat, long) => {
             })
         })
 
+        // console.log(json.city_name);
+        // console.log(days);
         return {
             placename: json.city_name,
             days: days,
         }
-    } catch(err) {
+    } catch (err) {
         console.log('weatherbit forecast api fetch error', err);
         return err;
     }
 }
 
 const fetchPixabayApi = async (placename) => {
-    const fullUrl =  'https://pixabay.com/api/?key=' + process.env.PIXABAY_API_KEY
+    const fullUrl = 'https://pixabay.com/api/?key=' + process.env.PIXABAY_API_KEY
         + '&q=' + encodeURIComponent(placename);
 
     console.log(`api call to ${fullUrl}`)
     try {
         const res = await fetch(fullUrl);
         const json = await res.json();
-        console.log(json);
+        //console.log(json);
         if (json.total > 1) {
+            // console.log(json.hits[0].webformatURL);
             return json.hits[0].webformatURL;
-        }
-        else {
+        } else {
             return 'no image found';
         }
-    } catch(err) {
+    } catch (err) {
         console.log('pixabay forecast api fetch error', err);
         return err;
     }
 }
 
-
-export {fetchGeonamesApi, fetchWeatherbitApi, fetchWeatherbitApiCurrent,
-    fetchWeatherbitApiForecast, fetchPixabayApi, fetchDestinationWx}
+exports.fetchDestinationData = fetchDestinationData;
