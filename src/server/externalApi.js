@@ -12,6 +12,7 @@ const fetchDestinationData = async (placename, date) => {
     return {
         wx: wx,
         imageUrl: imageUrl,
+        coords: coords,
     }
 }
 
@@ -38,10 +39,10 @@ const fetchGeonamesApi = async (placename) => {
         return {
             lat: firstPostalCode.lat,
             long: firstPostalCode.lng,
-            country: firstPostalCode.countryCode,
+            countryCode: firstPostalCode.countryCode,
             placename: firstPostalCode.adminName1,
-
         }
+
     } catch (err) {
         console.log('geonames api fetch error', err);
         return err;

@@ -4,8 +4,16 @@
   background: mistyrose;
   padding: 15px 10px;
 
-  .trip__info {
+  .no_trip_avail {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+
+  .trip__info {
+    display: none;
     flex-direction: column;
     align-items: start;
   }
@@ -16,6 +24,8 @@
   }
 
   .trip__title {
+    font-weight: bold;
+    font-size: 1.5rem;
 
   }
 
