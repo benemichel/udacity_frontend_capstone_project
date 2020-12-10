@@ -1,4 +1,26 @@
+import moment from 'moment';
 const fetch = require("node-fetch");
+
+const fetchDestinationWx = async (placename, date) => {
+    let destData = {};
+    fetchGeonamesApi(placename).then( res => {
+        fetchWeatherbitApi(res.lat, res.long, date).then( res => {
+            destData.wx = res;
+        }).catch( err => {
+            console.log('error', err);
+        });
+        fetchPixabayApi(placename).then( res => {
+            destData.imageUrl = res;
+        }).catch( err => {
+            console.log('error', err);
+        });
+
+        return destData;
+    }).catch( err => {
+        console.log('error', err);
+        return 'could not fetch destination dest data'
+    })
+}
 
 const fetchGeonamesApi = async (placename) => {
 
@@ -26,8 +48,25 @@ const fetchGeonamesApi = async (placename) => {
 }
 
 const fetchWeatherbitApi = async (lat, long, date) => {
+    //if trip more than a week in future fetch forecast, otherwise current weather
+    const userDate = moment(date,'DD/MM/YYYY');
+    const today = moment();
+    const diffDays = userDate.diff(today, 'days');
 
-
+    if (diffDays > 7) {
+        fetchWeatherbitApiForecast(lat, long).then( res => {
+            return res;
+        }).catch( err => {
+            return err;
+        })
+    }
+    else {
+        fetchWeatherbitApiCurrent(lat, long).then( res => {
+            return res;
+        }).catch( err => {
+            return err;
+        })
+    }
 }
 
 const fetchWeatherbitApiCurrent = async (lat, long) => {
@@ -41,14 +80,17 @@ const fetchWeatherbitApiCurrent = async (lat, long) => {
         console.log(json);
         const data = json.data[0];
 
-
         return {
             placename: data.city_name,
-            sunset: data.sunset,
-            sunrise: data.sunrise,
-            wxDescription: data.weather.description,
-            wxIcon: data.weather.icon,
-            temp: data.temp,
+            // sunset: data.sunset,
+            // sunrise: data.sunrise,
+            days: [
+                {
+                    wxDescription: data.weather.description,
+                    wxIcon: data.weather.icon,
+                    temp: data.temp,
+                }
+            ]
         }
     } catch(err) {
         console.log('weatherbit api current fetch error', err);
@@ -73,7 +115,7 @@ const fetchWeatherbitApiForecast = async (lat, long) => {
                 date: day.datetime,
                 max_temp: day.max_temp,
                 min_temp: day.min_temp,
-                wx_descriptiuon: day.weather.description,
+                wx_description: day.weather.description,
                 wx_icon: day.weather.icon,
             })
         })
@@ -110,4 +152,5 @@ const fetchPixabayApi = async (placename) => {
 }
 
 
-export {fetchGeonamesApi, fetchWeatherbitApi, fetchWeatherbitApiCurrent, fetchWeatherbitApiForecast, fetchPixabayApi}
+export {fetchGeonamesApi, fetchWeatherbitApi, fetchWeatherbitApiCurrent,
+    fetchWeatherbitApiForecast, fetchPixabayApi, fetchDestinationWx}

@@ -1,3 +1,5 @@
+import {fetchDestinationWx} from "./externalApi";
+
 var path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
@@ -36,7 +38,21 @@ app.get('/', function (req, res) {
     res.sendFile(path.resolve('src/client/views/index.html'))
 })
 
+app.post('/trips', async (req, res) => {
+    const destination = req.body.destination;
+    const departure = req.body.departure;
+    const arrival = req.body.arrival;
 
+    try {
+        const destData = await fetchDestinationWx(destination, departure);
+        res.status(200);
+        res.send(destData);
+    }
+    catch {
+        console.log('post route fetching data failed');
+    }
+
+})
 //console.log(`Your API key is ${process.env.API_KEY}`);
 
 
