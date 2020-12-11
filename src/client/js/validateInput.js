@@ -35,12 +35,12 @@ const validateFormInputs = () => {
     else {
         button.disabled = true;
     }
-
 }
 
 const validateDestination = (destination) => {
     return destination !== "";
 }
+
 const validateDate = (dateString) => {
     //DD/MM/YYYY
     const regex = new RegExp(/^(([0][1-9])|([1|2]\d)|([3][0|1]))\/((0[1-9])|(1[0-2]))\/(\d{4})$/)

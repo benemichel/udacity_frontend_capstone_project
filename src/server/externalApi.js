@@ -3,11 +3,8 @@ const fetch = require('node-fetch');
 
 const fetchDestinationData = async (placename, countryCode, date) => {
     const coords = await fetchGeonamesApi(placename, countryCode);
-    // console.log('coords', coords);
     const wx = await fetchWeatherbitApi(coords.lat, coords.long, date);
-    // console.log('wx', wx);
     const imageUrl = await fetchPixabayApi(placename);
-    // console.log('imageUrl', imageUrl);
 
     return {
         wx: wx,
@@ -25,7 +22,6 @@ const fetchGeonamesApi = async (placename, countryCode) => {
     try {
         const res = await fetch(fullUrl);
         const json = await res.json();
-
 
         //find first city with given countryCode
         const firstPostalCode = json.postalcodes.slice(0)[0];
@@ -87,8 +83,6 @@ const fetchWeatherbitApiCurrent = async (lat, long) => {
 
         return {
             placename: data.city_name,
-            // sunset: data.sunset,
-            // sunrise: data.sunrise,
             days: [
                 {
                     date: moment().format('DD/MM/YYYY'),
@@ -112,10 +106,9 @@ const fetchWeatherbitApiForecast = async (lat, long) => {
     try {
         const res = await fetch(fullUrl);
         const json = await res.json();
-        // console.log(json);
         const data = json.data;
-
         const days = [];
+
         data.forEach((day) => {
             days.push({
                 date: day.datetime,
@@ -126,8 +119,6 @@ const fetchWeatherbitApiForecast = async (lat, long) => {
             })
         })
 
-        // console.log(json.city_name);
-        // console.log(days);
         return {
             placename: json.city_name,
             days: days,
@@ -146,9 +137,7 @@ const fetchPixabayApi = async (placename) => {
     try {
         const res = await fetch(fullUrl);
         const json = await res.json();
-        //console.log(json);
         if (json.total > 1) {
-            // console.log(json.hits[0].webformatURL);
             return json.hits[0].webformatURL;
         } else {
             return 'no image found';
