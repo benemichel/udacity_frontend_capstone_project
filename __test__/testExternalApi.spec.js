@@ -1,4 +1,4 @@
-import { fetchGeonamesApi, fetchWeatherbitApi, fetchWeatherbitApiCurrent, fetchWeatherbitApiForecast, fetchPixabayApi } from "../src/server/externalApi"
+import { fetchGeonamesApi, fetchWeatherbitApiCurrent, fetchWeatherbitApiForecast, fetchPixabayApi } from "../src/server/externalApi"
 require('dotenv').config()
 
 describe("Testing Geonames API fetching", () => {
@@ -13,22 +13,6 @@ describe("Testing Geonames API fetching", () => {
 
         await expect(fetchGeonamesApi(placename)).resolves.toEqual(expected);
     })
-
-    // test("Testing validateUrl() with invalid Url", () => {
-    //     const urlFail = 'https//foo/some/bar'
-    //     expect(validateUrl(urlFail)).toEqual(false);
-    // })
-    //
-    // test("Testing validateUrl() with empty Url", () => {
-    //     const urlEmpty = 'https://foo/some/bar'
-    //     expect(validateUrl(urlEmpty)).toEqual(false);
-    // })
-    //
-    // test("Testing validateUrl() without domain Url", () => {
-    //     const urlWoDomain = 'https://foo/some/bar'
-    //     expect(validateUrl(urlWoDomain)).toEqual(false);
-    // })
-
 });
 
 describe("Testing Weatherbit API fetching", () => {
