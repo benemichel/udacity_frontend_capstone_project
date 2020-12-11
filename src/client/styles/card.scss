@@ -14,6 +14,14 @@
     font-size: 1.5rem;
   }
 
+  .no_trip_found {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+
   .trip__info {
     display: none;
     flex-direction: column;
@@ -49,6 +57,7 @@
 
       &:disabled {
         color: lightgrey;
+        cursor: default;
       }
     }
 

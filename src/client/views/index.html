@@ -27,6 +27,9 @@
             <div class="no_trip_avail">
                 No trip data available. Please use 'add trip'.
             </div>
+            <div class="no_trip_found">
+                Trip data could not be fetched. Please use 'add trip' again.
+            </div>
             <div class="trip__info">
                 <div class="trip__title">
                     <p class="destination_name"></p>
@@ -79,10 +82,13 @@
                     <input id="destination" type="text" name="input" value="Limburg an der Lahn" placeholder="Destination">
                     <label for="destCountryCode">Enter a Country Code (XX)</label>
                     <input id="destCountryCode" type="text" name="input" value="DE" placeholder="CountryCode">
+                    <div id="country-code-validation-error"></div>
                     <label for="departure">Enter a departure date (DD/MM/YYYY)</label>
                     <input id="departure" type="text" name="input" value="" placeholder="Departure">
+                    <div id="departure-validation-error"></div>
                     <label for="arrival">Enter an arrival date (DD/MM/YYYY)</label>
                     <input id="arrival" type="text" name="input" value="" placeholder="Arrival">
+                    <div id="arrival-validation-error"></div>
                     <button class="modal__add_button">Add Trip</button>
                 </div>
             </div>
