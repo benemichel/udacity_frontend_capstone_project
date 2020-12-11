@@ -18,7 +18,6 @@ const postTripData = async (destination, countryCode, departure, arrival) => {
     );
     try {
         const resData = await res.json();
-        console.log('post data returned ', resData);
         return resData;
     } catch (err) {
         console.log('error', err);

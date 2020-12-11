@@ -1,4 +1,6 @@
 import {postTripData} from './apiCalls'
+import {validateFormInputs} from "./validateInput";
+
 const moment = require('moment');
 const storage = window.localStorage;
 let currentTrip = {};
@@ -16,7 +18,6 @@ const showModal = (event) => {
 }
 
 const addTrip = (event) => {
-    console.log("add trip called");
     const modal = document.getElementsByClassName('modal').item(0);
     const destination = document.getElementById('destination').value;
     const countryCode = document.getElementById('destCountryCode').value;
@@ -30,7 +31,6 @@ const addTrip = (event) => {
         currentTrip.destination = destination;
         currentTrip.departure = departure;
         currentTrip.arrival = arrival;
-        console.log(`postTripData returned ${currentTrip}`);
 
         updateTripCard();
         modal.style.display = 'none';
@@ -44,34 +44,43 @@ const addTrip = (event) => {
 const updateTripCard = () => {
     let wx = {};
 
-    if (currentTrip.wx.days.length === 1) {
-        wx = currentTrip.wx.days[0];
-        document.getElementsByClassName('trip_wx__temp').item(0).innerHTML =
-            `Temp ${wx.temp}°C`;
+    if (currentTrip && currentTrip.wx && currentTrip.coords.lat) {
+        if (currentTrip.wx.days.length === 1) {
+            wx = currentTrip.wx.days[0];
+            document.getElementsByClassName('trip_wx__temp').item(0).innerHTML =
+                `Temp ${wx.temp}°C`;
+        }
+        else {
+            wx = currentTrip.wx.days.slice(-1)[0];
+            document.getElementsByClassName('trip_wx__temp').item(0).innerHTML =
+                `High ${wx.max_temp}°C, Low ${wx.min_temp}°C`;
+        }
+
+        const icon = `/src/client/media/weatherbit_icons/${wx.icon}.png`;
+        const tillTrip = moment(currentTrip.departure, 'DD/MM/YYYY').diff(moment(), 'days').toString();
+        document.getElementsByClassName('no_trip_avail').item(0).style.display = 'none';
+        document.getElementsByClassName('trip__info').item(0).style.display = 'flex';
+        document.getElementsByClassName('no_trip_found').item(0).style.display = 'none';
+        document.getElementsByClassName('trip_wx__icon').item(0).src = icon;
+        document.getElementsByClassName('trip_wx__description').item(0).innerHTML = wx.description;
+        document.getElementsByClassName('trip_wx__date').item(0).innerHTML = wx.date;
+        document.getElementsByClassName('trip__till').item(0).innerHTML =
+            `${currentTrip.coords.placename}, ${currentTrip.coords.countryCode} is ${tillTrip} days away`;
+
+        document.getElementsByClassName('trip__image').item(0).src = currentTrip.imageUrl;
+        document.getElementsByClassName('destination_name').item(0).innerHTML =
+            `My trip to ${currentTrip.coords.placename}, ${currentTrip.coords.countryCode}` ;
+        document.getElementsByClassName('trip_dep').item(0).innerHTML =
+            `Departing: ${currentTrip.departure}` ;
+        document.getElementsByClassName('trip_arr').item(0).innerHTML =
+            `Arriving: ${currentTrip.arrival}` ;
     }
     else {
-        wx = currentTrip.wx.days.slice(-1)[0];
-        document.getElementsByClassName('trip_wx__temp').item(0).innerHTML =
-            `High ${wx.max_temp}°C, Low ${wx.min_temp}°C`;
+        document.getElementsByClassName('no_trip_found').item(0).style.display = 'flex';
+        document.getElementsByClassName('trip__info').item(0).style.display = 'none';
+        document.getElementsByClassName('no_trip_avail').item(0).style.display = 'none';
     }
 
-    const icon = `/src/client/media/weatherbit_icons/${wx.icon}.png`;
-    const tillTrip = moment(currentTrip.departure, 'DD/MM/YYYY').diff(moment(), 'days').toString();
-    document.getElementsByClassName('no_trip_avail').item(0).style.display = 'none';
-    document.getElementsByClassName('trip__info').item(0).style.display = 'flex';
-    document.getElementsByClassName('trip_wx__icon').item(0).src = icon;
-    document.getElementsByClassName('trip_wx__description').item(0).innerHTML = wx.description;
-    document.getElementsByClassName('trip_wx__date').item(0).innerHTML = wx.date;
-    document.getElementsByClassName('trip__till').item(0).innerHTML =
-        `${currentTrip.wx.placename}, ${currentTrip.coords.countryCode} is ${tillTrip} days away`;
-
-    document.getElementsByClassName('trip__image').item(0).src = currentTrip.imageUrl;
-    document.getElementsByClassName('destination_name').item(0).innerHTML =
-        `My trip to ${currentTrip.wx.placename}, ${currentTrip.coords.countryCode}` ;
-    document.getElementsByClassName('trip_dep').item(0).innerHTML =
-        `Departing: ${currentTrip.departure}` ;
-    document.getElementsByClassName('trip_arr').item(0).innerHTML =
-        `Arriving: ${currentTrip.arrival}` ;
 }
 
 const loadTripFromLocalStorage = () => {
@@ -91,9 +100,7 @@ const loadTripFromLocalStorage = () => {
 }
 
 const saveTrip = () => {
-    console.log(`postTripData returned ${currentTrip}`);
     storage.setItem('trip', JSON.stringify(currentTrip) );
-    console.log(JSON.parse(storage.getItem('trip')));
     document.getElementsByClassName('remove_trip').item(0).disabled = false;
 }
 
@@ -110,7 +117,8 @@ document.getElementsByClassName('modal__add_button').item(0).addEventListener('c
 document.getElementsByClassName('save_trip').item(0).addEventListener('click', saveTrip);
 document.getElementsByClassName('remove_trip').item(0).addEventListener('click', removeTrip);
 document.addEventListener('DOMContentLoaded', loadTripFromLocalStorage);
-
-//TODO :: remove
-//document.addEventListener('DOMContentLoaded', addTrip);
+document.getElementById('departure').addEventListener('input', validateFormInputs);
+document.getElementById('arrival').addEventListener('input', validateFormInputs);
+document.getElementById('destCountryCode').addEventListener('input', validateFormInputs);
+document.getElementById('destination').addEventListener('input', validateFormInputs);
 

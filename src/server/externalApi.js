@@ -30,18 +30,16 @@ const fetchGeonamesApi = async (placename, countryCode) => {
         //find first city with given countryCode
         const firstPostalCode = json.postalcodes.slice(0)[0];
         const countryCodeMatches = json.postalcodes.filter( element => {
-            return element.countryCode === countryCode && element.placename === placename;
+            return element.countryCode === countryCode && element.placeName === placename;
         })
 
-        const match = countryCodeMatches.length ? countryCodeMatches.slice(1)[0] : firstPostalCode;
-
-        console.log('countryCodeMatches', countryCodeMatches);
+        const match = countryCodeMatches.length > 0 ? countryCodeMatches.slice(1)[0] : firstPostalCode;
 
         return {
             lat: match.lat,
             long: match.lng,
             countryCode: match.countryCode,
-            placename: match.adminName1,
+            placename: match.placeName,
         }
 
     } catch (err) {
