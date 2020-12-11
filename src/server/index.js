@@ -41,9 +41,10 @@ app.get('/', function (req, res) {
 app.post('/trips', async (req, res) => {
     const destination = req.body.destination;
     const departure = req.body.departure;
+    const countryCode = req.body.countryCode;
     const arrival = req.body.arrival;
 
-    externalApi.fetchDestinationData(destination, departure).then( promRes => {
+    externalApi.fetchDestinationData(destination, countryCode, departure).then( promRes => {
         res.status(200);
         res.send(promRes);
     }).catch( err => {

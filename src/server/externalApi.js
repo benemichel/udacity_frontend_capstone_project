@@ -1,8 +1,8 @@
 const moment = require('moment');
 const fetch = require('node-fetch');
 
-const fetchDestinationData = async (placename, date) => {
-    const coords = await fetchGeonamesApi(placename);
+const fetchDestinationData = async (placename, countryCode, date) => {
+    const coords = await fetchGeonamesApi(placename, countryCode);
     // console.log('coords', coords);
     const wx = await fetchWeatherbitApi(coords.lat, coords.long, date);
     // console.log('wx', wx);
@@ -16,7 +16,7 @@ const fetchDestinationData = async (placename, date) => {
     }
 }
 
-const fetchGeonamesApi = async (placename) => {
+const fetchGeonamesApi = async (placename, countryCode) => {
 
     const fullUrl = 'http://api.geonames.org/postalCodeLookupJSON?placename=' + placename
         + '&username=' + process.env.GEONAMES_USERNAME;
@@ -25,22 +25,23 @@ const fetchGeonamesApi = async (placename) => {
     try {
         const res = await fetch(fullUrl);
         const json = await res.json();
-        const firstPostalCode = json.postalcodes.slice(0)[0];
-        // console.log(firstPostalCode);
 
-        // console.log({
-        //     lat: firstPostalCode.lat,
-        //     long: firstPostalCode.lng,
-        //     country: firstPostalCode.countryCode,
-        //     placename: firstPostalCode.adminName1,
-        //
-        // });
+
+        //find first city with given countryCode
+        const firstPostalCode = json.postalcodes.slice(0)[0];
+        const countryCodeMatches = json.postalcodes.filter( element => {
+            return element.countryCode === countryCode && element.placename === placename;
+        })
+
+        const match = countryCodeMatches.length ? countryCodeMatches.slice(1)[0] : firstPostalCode;
+
+        console.log('countryCodeMatches', countryCodeMatches);
 
         return {
-            lat: firstPostalCode.lat,
-            long: firstPostalCode.lng,
-            countryCode: firstPostalCode.countryCode,
-            placename: firstPostalCode.adminName1,
+            lat: match.lat,
+            long: match.lng,
+            countryCode: match.countryCode,
+            placename: match.adminName1,
         }
 
     } catch (err) {

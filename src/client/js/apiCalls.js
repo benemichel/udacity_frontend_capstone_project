@@ -1,7 +1,8 @@
-const postTripData = async (destination, departure, arrival) => {
+const postTripData = async (destination, countryCode, departure, arrival) => {
 
     const data = {
         destination,
+        countryCode,
         departure,
         arrival
     };
