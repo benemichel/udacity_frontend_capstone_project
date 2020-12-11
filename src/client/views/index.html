@@ -23,7 +23,7 @@
     </section>
     <section class="next_trip">
         <div class="next_trip_card">
-            <img class="trip__image" src="/src/client/media/placeholder.jpg" alt="" />
+            <img class="trip__image" src="/src/client/media/placeholder.jpg" alt=""/>
             <div class="no_trip_avail">
                 No trip data available. Please use 'add trip'.
             </div>
@@ -37,33 +37,31 @@
                     <button class="save_trip">Save Trip</button>
                     <button class="remove_trip">Remove Trip</button>
                 </div>
-                <div class="trip__content">
-                    <div class="trip_time">
-                        <div class="trip_time__till">
-                        </div>
-                        <div class="trip_time__duration">
 
-                        </div>
+                <div class="trip_time">
+                    <div class="trip_time__till">
+                    </div>
+                    <div class="trip_time__duration">
 
                     </div>
 
-                    <div class="trip_wx">
-                        <div class="trip_wx__header">
-                            Typical Weather for then is:
-                        </div>
-                        <div class="trip_wx__temp">
-
-                        </div>
-                        <div class="trip_wx__icon">
-
-                        </div>
-                        <div class="trip_wx__description">
-
-                        </div>
-
-                    </div>
                 </div>
             </div>
+            <div class="trip_wx">
+                <div class="trip_wx__header">
+                    Typical weather for then is:
+                </div>
+                <div class="trip_wx__date">
+
+                </div>
+                <img class="trip_wx__icon" src = "" alt="weather icon"/>
+                <div class="trip_wx__temp">
+                </div>
+
+                <div class="trip_wx__description">
+                </div>
+            </div>
+
         </div>
 
         <div class="modal">
@@ -78,9 +76,9 @@
                     <label for="destination">Enter a destination</label>
                     <input id="destination" type="text" name="input" value="" placeholder="Destination">
                     <label for="departure">Enter a departure date (DD/MM/YYYY)</label>
-                    <input id="departure" type="text" name="input" value=""  placeholder="Departure">
+                    <input id="departure" type="text" name="input" value="" placeholder="Departure">
                     <label for="arrival">Enter an arrival date (DD/MM/YYYY)</label>
-                    <input id="arrival" type="text" name="input" value=""  placeholder="Arrival">
+                    <input id="arrival" type="text" name="input" value="" placeholder="Arrival">
                     <button class="modal__add_button">Add Trip</button>
                 </div>
             </div>

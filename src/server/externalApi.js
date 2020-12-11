@@ -92,8 +92,9 @@ const fetchWeatherbitApiCurrent = async (lat, long) => {
             // sunrise: data.sunrise,
             days: [
                 {
-                    wxDescription: data.weather.description,
-                    wxIcon: data.weather.icon,
+                    date: moment().format('DD/MM/YYYY'),
+                    description: data.weather.description,
+                    icon: data.weather.icon,
                     temp: data.temp,
                 }
             ]
@@ -121,8 +122,8 @@ const fetchWeatherbitApiForecast = async (lat, long) => {
                 date: day.datetime,
                 max_temp: day.max_temp,
                 min_temp: day.min_temp,
-                wx_description: day.weather.description,
-                wx_icon: day.weather.icon,
+                description: day.weather.description,
+                icon: day.weather.icon,
             })
         })
 

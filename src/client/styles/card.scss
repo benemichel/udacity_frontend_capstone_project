@@ -1,6 +1,7 @@
 .next_trip_card {
   display: flex;
-  justify-content: space-around ;
+  flex-direction: column;
+  justify-content: space-around;
   background: mistyrose;
   padding: 15px 10px;
 
@@ -15,26 +16,66 @@
   .trip__info {
     display: none;
     flex-direction: column;
-    align-items: start;
+    align-items: center;
   }
 
   .trip__image {
     max-width: 400px;
+    max-height: 210px;
 
   }
 
   .trip__title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    margin: 10px 0;
 
   }
 
   .trip__action {
+    margin: 10px 0;
+
+    button {
+      background-color: white;
+      font-family: inherit;
+      border: 2px solid gray;
+      border-radius: 4px;
+      font-weight: bold;
+
+      &:disabled {
+        color: lightgrey;
+      }
+    }
 
   }
 
   .trip__content {
 
+  }
+
+  .trip_wx {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0;
+
+    .trip_wx__header {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+
+    .trip_wx__icon {
+      margin-top: 7px;
+    }
+
+    .trip_wx__date,
+    .trip_wx__description,
+    .trip_wx__temp {
+      margin: 4px 0;
+    }
   }
 
 
