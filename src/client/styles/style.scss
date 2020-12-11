@@ -1,10 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   width: 100%;
   min-height: 100vh;
   margin: 0;
+  font-family: 'Lato', sans-serif;
 }
 
+p {
+  margin: 4px 0;
+}
+
+main {
+  min-height: 100vh;
+}
 
 .add_trip {
   display: flex;
@@ -19,9 +28,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: solid;
     border-radius: 20px;
-    border-color: lightgrey;
+    border: solid lightgrey;
     max-height: 25px;
     box-shadow: none;
     cursor: pointer;

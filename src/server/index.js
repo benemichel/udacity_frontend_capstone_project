@@ -1,4 +1,6 @@
-var path = require('path');
+const  externalApi = require('./externalApi');
+
+const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 const fetch = require("node-fetch");
@@ -36,7 +38,19 @@ app.get('/', function (req, res) {
     res.sendFile(path.resolve('src/client/views/index.html'))
 })
 
+app.post('/trips', async (req, res) => {
+    const destination = req.body.destination;
+    const departure = req.body.departure;
+    const countryCode = req.body.countryCode;
+    const arrival = req.body.arrival;
 
+    externalApi.fetchDestinationData(destination, countryCode, departure).then( promRes => {
+        res.status(200);
+        res.send(promRes);
+    }).catch( err => {
+        console.log('error in post route /trips', err)
+    });
+})
 //console.log(`Your API key is ${process.env.API_KEY}`);
 
 
