@@ -51,53 +51,7 @@ app.post('/trips', async (req, res) => {
         console.log('error in post route /trips', err)
     });
 })
-//console.log(`Your API key is ${process.env.API_KEY}`);
+
+module.exports = app;
 
 
-// app.post('/sentiment', (req, res) => {
-//
-//     console.log("to POST /sentiment");
-//     const url = req.body.url;
-//     const lang = req.body.lang;
-//     console.log(req.body);
-//
-//     console.log("url send to api:" + url);
-//     getSentiment(url, lang).then(apiRes => {
-//         res.send(apiRes);
-//     }).catch(err => {
-//         console.log("GET /sentiment error", err);
-//         res.send(400);
-//     });
-// });
-//
-//
-// const getSentiment = async (url, lang) => {
-//
-//     const fullUrl = 'https://api.meaningcloud.com/sentiment-2.1?key='
-//         + process.env.API_KEY +
-//         '&lang=' +
-//         lang +
-//         '&of=json&url='
-//         + url;
-//
-//     console.log('full url: ' + fullUrl);
-//     const res = await fetch(fullUrl);
-//     const json = await res.json();
-//
-//     console.log(`api json response ${json}`);
-//
-//     const responseData = {
-//         'agreement': json.agreement,
-//         'irony': json.irony,
-//         'subjectivity': json.subjectivity,
-//         'sentiment': json.score_tag,
-//     }
-//
-//     if (!responseData.agreement) {
-//         console.log('invalid API response');
-//         throw new Error(json);
-//     }
-//
-//     console.log(`api response ${JSON.stringify(responseData)}`);
-//     return responseData;
-// }
