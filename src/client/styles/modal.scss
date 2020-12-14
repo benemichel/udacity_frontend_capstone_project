@@ -2,7 +2,7 @@
   display: none;
   position: fixed;
   z-index: 1;
-  padding-top: 100px;
+  padding-top: 20px;
   left: 0;
   top: 0;
   width: 100vw;
@@ -76,7 +76,16 @@
         color: lightgrey;
         cursor: default;
       }
+      &:hover {
+        color: lightgrey;
+      }
     }
+  }
+}
+
+@media (min-width: 600px) {
+  .modal {
+    padding-top: 100px;
   }
 }
 

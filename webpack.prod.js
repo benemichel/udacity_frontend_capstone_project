@@ -1,12 +1,15 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin")
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports =
     {
         entry: './src/client/index.js',
         mode: 'production',
+        stats: {
+            //remove MiniCSS console outputs
+            children: false
+        },
         module: {
             rules: [
                 {
@@ -19,11 +22,8 @@ module.exports =
                     use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
                 },
                 {
-                    test: /\.(png|jpe?g|gif)$/i,
-                    loader: 'file-loader?name=app/images/[name].[ext]',
-                    options: {
-                        outputPath: 'images',
-                    },
+                    test: /\.(png|jpe?g|gif)$/,
+                    loader: 'url-loader',
                 },
 
             ]

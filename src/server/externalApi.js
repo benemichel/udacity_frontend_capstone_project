@@ -18,7 +18,6 @@ const fetchGeonamesApi = async (placename, countryCode) => {
     const fullUrl = 'http://api.geonames.org/postalCodeLookupJSON?placename=' + placename
         + '&username=' + process.env.GEONAMES_USERNAME;
 
-    console.log(`api call to ${fullUrl}`)
     try {
         const res = await fetch(fullUrl);
         const json = await res.json();
@@ -75,7 +74,6 @@ const fetchWeatherbitApiCurrent = async (lat, long) => {
     const fullUrl = 'https://api.weatherbit.io/v2.0/current?lat=' + lat
         + '&lon=' + long + '&key=' + process.env.WEATHERBIT_API_KEY;
 
-    console.log(`api call to ${fullUrl}`)
     try {
         const res = await fetch(fullUrl);
         const json = await res.json();
@@ -102,7 +100,6 @@ const fetchWeatherbitApiForecast = async (lat, long) => {
     const fullUrl = 'https://api.weatherbit.io/v2.0/forecast/daily?lat=' + lat
         + '&lon=' + long + '&key=' + process.env.WEATHERBIT_API_KEY;
 
-    console.log(`api call to ${fullUrl}`)
     try {
         const res = await fetch(fullUrl);
         const json = await res.json();
@@ -133,7 +130,6 @@ const fetchPixabayApi = async (placename) => {
     const fullUrl = 'https://pixabay.com/api/?key=' + process.env.PIXABAY_API_KEY
         + '&q=' + encodeURIComponent(placename);
 
-    console.log(`api call to ${fullUrl}`)
     try {
         const res = await fetch(fullUrl);
         const json = await res.json();

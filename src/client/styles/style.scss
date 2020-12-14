@@ -36,6 +36,10 @@ main {
     text-transform: lowercase;
     padding: 0 5px;
     font-weight: bold;
+
+    &:hover {
+      color: lightgrey;
+    }
   }
 
   .add_trip__icon {

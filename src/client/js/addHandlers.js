@@ -1,6 +1,6 @@
 import { postTripData } from './apiCalls'
-import { validateFormInputs } from "./validateInput";
 import dayjs from 'dayjs';
+import { placeholderDestImage } from './images';
 
 // const moment = require('moment');
 const storage = window.localStorage;
@@ -94,7 +94,7 @@ const loadTripFromLocalStorage = () => {
     }
     else {
         document.getElementsByClassName('remove_trip').item(0).disabled = true;
-        document.getElementsByClassName('trip__image').item(0).src = "/src/client/media/placeholder.jpg"
+        document.getElementsByClassName('trip__image').item(0).src = placeholderDestImage;
         document.getElementsByClassName('no_trip_avail').item(0).style.display = 'flex';
         document.getElementsByClassName('trip__info').item(0).style.display = 'none';
     }
@@ -112,14 +112,5 @@ const removeTrip = () => {
 }
 
 
-document.getElementsByClassName('modal__close').item(0).addEventListener('click', closeModal);
-document.getElementsByClassName('add_trip__button').item(0).addEventListener('click', showModal);
-document.getElementsByClassName('modal__add_button').item(0).addEventListener('click', addTrip);
-document.getElementsByClassName('save_trip').item(0).addEventListener('click', saveTrip);
-document.getElementsByClassName('remove_trip').item(0).addEventListener('click', removeTrip);
-document.addEventListener('DOMContentLoaded', loadTripFromLocalStorage);
-document.getElementById('departure').addEventListener('input', validateFormInputs);
-document.getElementById('arrival').addEventListener('input', validateFormInputs);
-document.getElementById('destCountryCode').addEventListener('input', validateFormInputs);
-document.getElementById('destination').addEventListener('input', validateFormInputs);
+export { closeModal, showModal, addTrip, saveTrip, removeTrip, loadTripFromLocalStorage }
 

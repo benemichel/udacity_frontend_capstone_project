@@ -20,6 +20,8 @@ Client side run ``npm run build-dev`` to start webpack dev server. Runs on local
 
 Server side run ``npm run start`` to start node server. Runs on localhost:8081
 
+## Run production code
+Run ``npm run serve-prod``. Builds dist folder via webpack and starts a local HTTP server on port 5000.
 ## Tests
 There is no mocking for APIs. 
 
