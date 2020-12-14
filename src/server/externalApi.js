@@ -1,4 +1,4 @@
-const moment = require('moment');
+const dayjs = require('dayjs');
 const fetch = require('node-fetch');
 
 const fetchDestinationData = async (placename, countryCode, date) => {
@@ -46,9 +46,9 @@ const fetchGeonamesApi = async (placename, countryCode) => {
 
 const fetchWeatherbitApi = async (lat, long, date) => {
     //if trip more than a week in future fetch forecast, otherwise current weather
-    const userDate = moment(date, 'DD/MM/YYYY');
-    const today = moment();
-    const diffDays = userDate.diff(today, 'days');
+    const userDate = dayjs(date, 'DD/MM/YYYY');
+    const today = dayjs();
+    const diffDays = userDate.diff(today, 'day');
 
     if (diffDays > 7) {
         try {
@@ -85,7 +85,7 @@ const fetchWeatherbitApiCurrent = async (lat, long) => {
             placename: data.city_name,
             days: [
                 {
-                    date: moment().format('DD/MM/YYYY'),
+                    date: dayjs().format('DD/MM/YYYY'),
                     description: data.weather.description,
                     icon: data.weather.icon,
                     temp: data.temp,
@@ -149,3 +149,4 @@ const fetchPixabayApi = async (placename) => {
 }
 
 exports.fetchDestinationData = fetchDestinationData;
+exports.apiCalls =  { fetchGeonamesApi, fetchWeatherbitApiCurrent, fetchWeatherbitApiForecast, fetchPixabayApi };

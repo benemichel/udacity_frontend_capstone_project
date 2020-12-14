@@ -1,4 +1,5 @@
-import { fetchGeonamesApi, fetchWeatherbitApiCurrent, fetchWeatherbitApiForecast, fetchPixabayApi } from "../src/server/externalApi"
+const apiExports = require('../src/server/externalApi');
+const { fetchGeonamesApi, fetchWeatherbitApiCurrent, fetchWeatherbitApiForecast, fetchPixabayApi } = apiExports.apiCalls;
 require('dotenv').config()
 
 describe("Testing Geonames API fetching", () => {
@@ -6,11 +7,10 @@ describe("Testing Geonames API fetching", () => {
         const placename = 'Bremen'
         const expected = {
                 long: 8.79062727272727,
-                country: 'DE',
+                countryCode: 'DE',
                 lat: 53.0889090909091,
                 placename: 'Bremen'
             };
-
         await expect(fetchGeonamesApi(placename)).resolves.toEqual(expected);
     })
 });

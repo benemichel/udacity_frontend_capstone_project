@@ -53,4 +53,4 @@ const validateCountryCode = (countryCode) => {
     return !!countryCode.match(regex);
 }
 
-export { validateFormInputs}
+export { validateFormInputs }

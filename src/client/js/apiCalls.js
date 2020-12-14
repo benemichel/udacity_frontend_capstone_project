@@ -24,4 +24,4 @@ const postTripData = async (destination, countryCode, departure, arrival) => {
     }
 }
 
-export {postTripData}
+export { postTripData }

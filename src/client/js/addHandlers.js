@@ -1,7 +1,8 @@
-import {postTripData} from './apiCalls'
-import {validateFormInputs} from "./validateInput";
+import { postTripData } from './apiCalls'
+import { validateFormInputs } from "./validateInput";
+import dayjs from 'dayjs';
 
-const moment = require('moment');
+// const moment = require('moment');
 const storage = window.localStorage;
 let currentTrip = {};
 
@@ -56,8 +57,8 @@ const updateTripCard = () => {
                 `High ${wx.max_temp}°C, Low ${wx.min_temp}°C`;
         }
 
-        const icon = `/src/client/media/weatherbit_icons/${wx.icon}.png`;
-        const tillTrip = moment(currentTrip.departure, 'DD/MM/YYYY').diff(moment(), 'days').toString();
+        const icon = `https://www.weatherbit.io/static/img/icons/${wx.icon}.png`;
+        const tillTrip = dayjs(currentTrip.departure, 'DD/MM/YYYY').diff(dayjs(), 'day').toString();
         document.getElementsByClassName('no_trip_avail').item(0).style.display = 'none';
         document.getElementsByClassName('trip__info').item(0).style.display = 'flex';
         document.getElementsByClassName('no_trip_found').item(0).style.display = 'none';
